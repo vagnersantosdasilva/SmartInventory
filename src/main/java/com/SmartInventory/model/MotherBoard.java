@@ -5,8 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+
 @Entity
-public class MotherBoard {
+public class MotherBoard   {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +29,8 @@ public class MotherBoard {
         this.serialNumber = serialNumber;
         this.status = status;
     }
+
+    public MotherBoard(){}
 
 
     public Integer getId() {

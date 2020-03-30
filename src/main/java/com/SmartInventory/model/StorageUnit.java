@@ -1,4 +1,4 @@
 package com.SmartInventory.model;
 
-public class StorageUnite {
+public class StorageUnit {
 }

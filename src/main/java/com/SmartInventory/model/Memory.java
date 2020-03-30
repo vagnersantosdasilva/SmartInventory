@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Memory {
+public class Memory{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

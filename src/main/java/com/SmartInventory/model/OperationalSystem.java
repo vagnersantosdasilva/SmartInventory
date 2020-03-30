@@ -21,11 +21,12 @@ public class OperationalSystem  {
     private String hostname;
     private String status;
     private String version;
-    private Date installDate;
-    private Date lastBoot;
+    private String installDate;
+    private String lastBoot;
 
-    public OperationalSystem(Integer id, Integer machineId, String name, String sysUpdate, String hostname, String status,
-                             String version, Date installDate, Date lastBoot) {
+
+    public OperationalSystem(Integer id, Integer machineId, String name, String sysUpdate,
+                             String hostname, String status, String version, String installDate, String lastBoot) {
         this.id = id;
         this.machineId = machineId;
         this.name = name;
@@ -39,6 +40,30 @@ public class OperationalSystem  {
 
     public OperationalSystem(){}
 
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getMachineId() {
+        return machineId;
+    }
+
+    public void setMachineId(Integer machineId) {
+        this.machineId = machineId;
+    }
+
+    public String getSysUpdate() {
+        return sysUpdate;
+    }
+
+    public void setSysUpdate(String sysUpdate) {
+        this.sysUpdate = sysUpdate;
+    }
 
     public String getName() {
         return name;
@@ -80,19 +105,19 @@ public class OperationalSystem  {
         this.version = version;
     }
 
-    public Date getInstallDate() {
+    public String getInstallDate() {
         return installDate;
     }
 
-    public void setInstallDate(Date installDate) {
+    public void setInstallDate(String installDate) {
         this.installDate = installDate;
     }
 
-    public Date getLastBoot() {
+    public String getLastBoot() {
         return lastBoot;
     }
 
-    public void setLastBoot(Date lastBoot) {
+    public void setLastBoot(String lastBoot) {
         this.lastBoot = lastBoot;
     }
 }
