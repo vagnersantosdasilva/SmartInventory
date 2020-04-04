@@ -55,6 +55,14 @@ public class MachineService {
 
     }
 
+    public boolean processorUpdate(Processor processor) throws Exception{
+
+        System.out.println(processor.getName()+"  , " +processor.getMachineId());
+        processorRepository.save(processor);
+        return true;
+
+    }
+
 
 
 
