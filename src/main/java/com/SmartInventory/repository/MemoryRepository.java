@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface MemoryRepository extends JpaRepository< Memory,Integer> {
 
-    @Query(nativeQuery = true,value = "select * from machine_inventory.memory where machine_id = ?1")
+    @Query(nativeQuery = true,value = "select * from machine_inventory.memory where machine_id = ?")
     public List<Memory> findByMachineId(Integer id);
 
 }

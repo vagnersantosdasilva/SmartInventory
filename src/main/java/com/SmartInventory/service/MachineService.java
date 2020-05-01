@@ -39,31 +39,46 @@ public class MachineService {
     }
 
     public List<MachineDTO> findAll(){
+
         List<MachineDTO> listMachine = new ArrayList<>();
         List<OperationalSystem> listOS = operationalSystemRepository.findAll();
 
         for (OperationalSystem os :listOS){
-            List<Software> softwareList = softwareRepository.findByMachineId(os.getMachineId());
-            List<Memory> memoryList = memoryRepository.findByMachineId(os.getMachineId());
-            Processor processor = processorRepository.findByMachineId(os.getMachineId());
-            MotherBoard motherBoard = motherBoardRepository.findByMachineId(os.getMachineId());
-            MachineDTO machineDTO = new MachineDTO(os.getMachineId(),memoryList,processor,softwareList,motherBoard,os);
-            listMachine.add(machineDTO);
+            if (os.getMachineId()!=null) {
+                List<Software> softwareList = softwareRepository.findByMachineId(os.getMachineId());
+                List<Memory> memoryList = memoryRepository.findByMachineId(os.getMachineId());
+                Processor processor = processorRepository.findByMachineId(os.getMachineId());
+                MotherBoard motherBoard = motherBoardRepository.findByMachineId(os.getMachineId());
+                MachineDTO machineDTO = new MachineDTO(os.getMachineId(), memoryList, processor, softwareList, motherBoard, os);
+                listMachine.add(machineDTO);
+            }
         }
-
         return listMachine;
-
     }
 
     public boolean processorUpdate(Processor processor) throws Exception{
-
-        System.out.println(processor.getName()+"  , " +processor.getMachineId());
         processorRepository.save(processor);
         return true;
-
     }
 
+    public boolean memorysUpdate(List<Memory> listMemory) throws Exception{
+        memoryRepository.save(listMemory);
+        return true;
+    }
 
+    public boolean osUpdate(OperationalSystem os) throws Exception{
+        operationalSystemRepository.save(os);
+        return true;
+    }
 
+    public boolean softwareUpdate(List<Software> listSoftware) throws Exception{
+        softwareRepository.save(listSoftware);
+        return true;
+    }
+
+    public boolean motherBoardUpdate(MotherBoard motherBoard) throws Exception{
+        motherBoardRepository.save(motherBoard);
+        return true;
+    }
 
 }

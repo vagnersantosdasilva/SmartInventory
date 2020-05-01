@@ -33,7 +33,7 @@ public class MachineDTO {
         this.id = id;
     }
 
-    public List<Memory> getMemory() {
+    public List<Memory> getMemorys() {
         return memorys;
     }
 

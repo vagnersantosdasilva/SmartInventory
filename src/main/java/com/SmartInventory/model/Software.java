@@ -1,9 +1,6 @@
 package com.SmartInventory.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 
@@ -13,6 +10,7 @@ public class Software implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(nullable = false )
     private Integer machineId;
     private String name;
     private String version;
@@ -21,8 +19,13 @@ public class Software implements Serializable {
     private String installDate;
     private String uninstallLocation;
     private String installLocation;
+    private boolean deleted;
+    private String deleteDate;
 
-    public Software(Integer id, Integer machineId, String name, String version, String arquiteture, Boolean collection, String installDate, String uninstallLocation, String installLocation) {
+
+    public Software(Integer id, Integer machineId, String name, String version, String arquiteture,
+                    Boolean collection, String installDate, String uninstallLocation,
+                    String installLocation, boolean deleted, String deleteDate) {
         this.id = id;
         this.machineId = machineId;
         this.name = name;
@@ -32,6 +35,9 @@ public class Software implements Serializable {
         this.installDate = installDate;
         this.uninstallLocation = uninstallLocation;
         this.installLocation = installLocation;
+        this.deleted=deleted;
+        this.deleteDate=deleteDate;
+
     }
 
     public Software(){}
@@ -107,5 +113,21 @@ public class Software implements Serializable {
 
     public void setInstallLocation(String installLocation) {
         this.installLocation = installLocation;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public String getDeleteDate() {
+        return deleteDate;
+    }
+
+    public void setDeleteDate(String deleteDate) {
+        this.deleteDate = deleteDate;
     }
 }
