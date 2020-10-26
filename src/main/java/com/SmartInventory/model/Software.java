@@ -21,11 +21,13 @@ public class Software implements Serializable {
     private String installLocation;
     private boolean deleted;
     private String deleteDate;
+    private String categories;
+
 
 
     public Software(Integer id, Integer machineId, String name, String version, String arquiteture,
                     Boolean collection, String installDate, String uninstallLocation,
-                    String installLocation, boolean deleted, String deleteDate) {
+                    String installLocation, boolean deleted, String deleteDate,String categories) {
         this.id = id;
         this.machineId = machineId;
         this.name = name;
@@ -37,11 +39,18 @@ public class Software implements Serializable {
         this.installLocation = installLocation;
         this.deleted=deleted;
         this.deleteDate=deleteDate;
-
+        this.categories=categories;
     }
 
     public Software(){}
 
+    public String getCategories() {
+        return categories;
+    }
+
+    public void setCategories(String categories) {
+        this.categories = categories;
+    }
 
     public Integer getId() {
         return id;

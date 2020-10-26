@@ -34,7 +34,10 @@ public class SmartInventoryController {
     @PostMapping("/machine/create")
     public ResponseEntity<?> createMachine(@RequestBody MachineDTO machine){
 
-        return new ResponseEntity<>( HttpStatus.CREATED);
+        return new ResponseEntity<>(
+                machineService.createMachine(machine),
+                HttpStatus.CREATED
+        );
     }
 
     @PutMapping("/processor/update")
@@ -59,7 +62,7 @@ public class SmartInventoryController {
             Error error = new Error(e.getMessage(),e.getCause());
             return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>( HttpStatus.OK);
+        return new ResponseEntity<>( HttpStatus.NO_CONTENT);
 
     }
 

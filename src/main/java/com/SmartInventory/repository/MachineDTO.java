@@ -7,20 +7,22 @@ import java.util.List;
 public class MachineDTO {
 
     private Integer id;
-    private List<Memory> memorys;
+    private List<Memory> memories;
     private Processor processor;
     private List<Software> softwares;
     private MotherBoard motherBoard;
     private OperationalSystem operationalSystem;
+    private List<StorageUnit> storageUnits;
 
-
-    public MachineDTO(Integer id, List<Memory> memorys, Processor processor, List<Software> softwares, MotherBoard motherBoard, OperationalSystem operationalSystem) {
+    public MachineDTO(Integer id, List<Memory> memorys, Processor processor, List<Software> softwares,
+                      MotherBoard motherBoard, OperationalSystem operationalSystem, List<StorageUnit> storageUnits) {
         this.id = id;
-        this.memorys = memorys;
+        this.memories = memorys;
         this.processor = processor;
         this.softwares = softwares;
         this.motherBoard = motherBoard;
         this.operationalSystem = operationalSystem;
+        this.storageUnits = storageUnits;
     }
 
     public MachineDTO(){}
@@ -33,12 +35,12 @@ public class MachineDTO {
         this.id = id;
     }
 
-    public List<Memory> getMemorys() {
-        return memorys;
+    public List<Memory> getMemories() {
+        return memories;
     }
 
     public void setMemory(List<Memory> memorys) {
-        this.memorys = memorys;
+        this.memories = memorys;
     }
 
     public Processor getProcessor() {
@@ -71,5 +73,13 @@ public class MachineDTO {
 
     public void setOperacionalSystem(OperationalSystem operationalSystem) {
         this.operationalSystem = operationalSystem;
+    }
+
+    public List<StorageUnit> getStorageUnits() {
+        return storageUnits;
+    }
+
+    public void setStorageUnits(List<StorageUnit> storageUnits) {
+        this.storageUnits = storageUnits;
     }
 }
