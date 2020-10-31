@@ -16,4 +16,7 @@ public interface MotherBoardRepository extends JpaRepository< MotherBoard,Intege
 
     @Query (nativeQuery = true,value="select * from machine_inventory.mother_board where serial_number=?1")
     public MotherBoard findBySerialNumber(String serial);
+
+    @Query(nativeQuery = true,value = "select machine_id from machine_inventory.mother_board order by id desc limit 1")
+    public Integer lastMachineId();
 }

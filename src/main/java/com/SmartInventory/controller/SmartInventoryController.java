@@ -1,5 +1,7 @@
 package com.SmartInventory.controller;
 
+import com.SmartInventory.exceptions.DuplicateValueException;
+import com.SmartInventory.exceptions.ResourceNotFoundException;
 import com.SmartInventory.model.*;
 import com.SmartInventory.repository.MachineDTO;
 import com.SmartInventory.service.MachineService;
@@ -20,19 +22,13 @@ public class SmartInventoryController {
 
 
     @GetMapping("/machine/{id}")
-    public ResponseEntity<?> getMachineById(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> getMachineById(@PathVariable("id") Integer id) throws ResourceNotFoundException {
 
         return new ResponseEntity<>(machineService.findMachineDTOById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/all_machine")
-    public ResponseEntity<?> getAllMachine(){
-
-        return new ResponseEntity<>(machineService.findAll(),HttpStatus.OK);
-    }
-
     @PostMapping("/machine/create")
-    public ResponseEntity<?> createMachine(@RequestBody MachineDTO machine){
+    public ResponseEntity<?> createMachine(@RequestBody MachineDTO machine) throws DuplicateValueException {
 
         return new ResponseEntity<>(
                 machineService.createMachine(machine),
@@ -40,51 +36,10 @@ public class SmartInventoryController {
         );
     }
 
-    @PutMapping("/processor/update")
-    public ResponseEntity<?> updateProcessor(@RequestBody Processor processor){
-        try{
-           machineService.processorUpdate(processor);
-        }catch(Exception e){
-            Error error =  new Error(e.getMessage(),e.getCause());
-
-            return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
-        }
-
-        return new ResponseEntity<Processor>(processor, HttpStatus.OK);
+    @PutMapping("machine/update")
+    public ResponseEntity<?> updateMachine(@RequestBody MachineDTO machine) throws ResourceNotFoundException{
+        machineService.machineUpdate(machine);
+        return new ResponseEntity<>(null,HttpStatus.OK);
     }
 
-    @PutMapping("/memory/update")
-    public ResponseEntity<?> updateMemory(@RequestBody List<Memory> memorys)  {
-        try {
-            machineService.memorysUpdate(memorys);
-        }catch (Exception e)
-        {
-            Error error = new Error(e.getMessage(),e.getCause());
-            return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>( HttpStatus.NO_CONTENT);
-
-    }
-
-    @PutMapping("/mother_board/update")
-    public ResponseEntity<?> updateMotherBoard(@RequestBody MotherBoard motherBoard){
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @DeleteMapping("softwares/remove")
-    public ResponseEntity<?> removeSoftwares(@RequestBody List<Software> softwares){
-
-        return new ResponseEntity<>( HttpStatus.OK);
-    }
-
-    @PutMapping("/softwares/update")
-    public ResponseEntity<?> updateSoftwares(@RequestBody List<Software> softwares){
-
-        return new ResponseEntity<>( HttpStatus.OK);
-    }
-
-    @PutMapping("/operational_system/update")
-    public ResponseEntity<?> updateOperationalSystem(@RequestBody OperationalSystem operationalSystem){
-        return new ResponseEntity<>( HttpStatus.OK);
-    }
 }
