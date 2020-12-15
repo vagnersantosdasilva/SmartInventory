@@ -19,7 +19,7 @@ public class Software implements Serializable {
     private String installDate;
     private String uninstallLocation;
     private String installLocation;
-    private boolean deleted;
+    private Boolean deleted;
     private String deleteDate;
     private String categories;
 
@@ -27,7 +27,7 @@ public class Software implements Serializable {
 
     public Software(Integer id, Integer machineId, String name, String version, String arquiteture,
                     Boolean collection, String installDate, String uninstallLocation,
-                    String installLocation, boolean deleted, String deleteDate,String categories) {
+                    String installLocation, Boolean deleted, String deleteDate,String categories) {
         this.id = id;
         this.machineId = machineId;
         this.name = name;
@@ -128,7 +128,7 @@ public class Software implements Serializable {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
 

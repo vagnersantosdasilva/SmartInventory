@@ -28,6 +28,9 @@ public class MachineService {
     @Autowired
     OperationalSystemRepository operationalSystemRepository;
 
+    @Autowired
+    StorageUnitRepository storageUnitRepository;
+
 
     public MachineDTO createMachine(MachineDTO machine) throws DuplicateValueException {
         //Verificar existência via serial da placa mae
@@ -36,7 +39,7 @@ public class MachineService {
             Integer machineId = createMachineId(machine);
             MachineDTO machineDTO = setMachineId(machineId, machine);
             if (machineDTO.getMemories()!=null)memoryRepository.save(machineDTO.getMemories());
-            //storageUnitRepository.save(machineDTO.getStorageUnits());
+            if (machineDTO.getStorageUnits()!=null) storageUnitRepository.save(machineDTO.getStorageUnits());
             if (machineDTO.getProcessor()!=null) processorRepository.save(machineDTO.getProcessor());
             if (machineDTO.getMotherBoard()!=null)motherBoardRepository.save(machineDTO.getMotherBoard());
             if (machineDTO.getSoftwares()!=null)softwareRepository.save(machineDTO.getSoftwares());
@@ -47,30 +50,34 @@ public class MachineService {
 
     public MachineDTO findMachineDTOById(Integer machineId) throws ResourceNotFoundException {
         if (motherBoardRepository.findByMachineId(machineId)==null) throw new ResourceNotFoundException("Recurso não encontrado");
-        List<Memory> listMemory = memoryRepository.findByMachineId(machineId);
-        List<Software> listSoftware = softwareRepository.findByMachineId(machineId);
+        List<Memory> listMemory = memoryRepository.findInstalledByMachineId(machineId);
+        List<Software> listSoftware = softwareRepository.findInstalledByMachineId(machineId);
         Processor processor = processorRepository.findByMachineId(machineId);
         MotherBoard motherBoard = motherBoardRepository.findByMachineId(machineId);
         OperationalSystem op = operationalSystemRepository.findByMachineId(machineId);
-        //List<StorageUnit> storageUnits = storageUnitRepository.findByMachineId(machineId);
+        List<StorageUnit> storageUnits = storageUnitRepository.findStorageUnitByMachineId(machineId);
         MachineDTO machineDTO = new MachineDTO(processor.getMachineId(),listMemory,
-                processor,listSoftware,motherBoard,op,null);
+                processor,listSoftware,motherBoard,op, storageUnits);
 
         return machineDTO;
     }
 
-    public void machineUpdate(MachineDTO machine) throws ResourceNotFoundException  {
-        if (!isRegistred(machine)) { throw new ResourceNotFoundException("O recurso ainda não foi criado!");}
-        Integer machineId = createMachineId(machine);
-        MachineDTO machineDTO = setMachineId(machineId, machine);
+    public void machineUpdate(Integer id,MachineDTO machine) throws ResourceNotFoundException  {
+        if (!isRegistred(id)) {
+            throw new ResourceNotFoundException("O recurso ainda não foi criado!");
+        }
+        MachineDTO machineDTO = setMachineId(id, machine);
         if (machineDTO.getMemories()!=null)memoryRepository.save(machineDTO.getMemories());
-        //storageUnitRepository.save(machineDTO.getStorageUnits());
+        if (machineDTO.getStorageUnits()!=null)storageUnitRepository.save(machineDTO.getStorageUnits());
         if (machineDTO.getProcessor()!=null) processorRepository.save(machineDTO.getProcessor());
         if (machineDTO.getMotherBoard()!=null)motherBoardRepository.save(machineDTO.getMotherBoard());
         if (machineDTO.getSoftwares()!=null)softwareRepository.save(machineDTO.getSoftwares());
         if (machineDTO.getOperationalSystem()!=null)operationalSystemRepository.save(machineDTO.getOperationalSystem());
+    }
 
-
+    private boolean isRegistred(Integer id){
+        if (motherBoardRepository.findByMachineId(id)!=null) return true;
+        return false;
     }
 
     private boolean isRegistred(MachineDTO machine ){
@@ -80,7 +87,7 @@ public class MachineService {
     }
 
     private Integer createMachineId(MachineDTO machineDTO){
-        Random generator = new Random();
+
         Integer lastId = motherBoardRepository.lastMachineId();
         if (lastId==null) return 1;
         return lastId+1;
@@ -109,6 +116,17 @@ public class MachineService {
                                     return e;
                                 })
                                 .collect(Collectors.toList())
+                );
+            }
+
+            if (machine.getStorageUnits()!=null){
+                machine.setStorageUnits(
+                        machine.getStorageUnits().stream()
+                        .map(e->{
+                            e.setMachineId(id);
+                            return e;
+                        })
+                        .collect(Collectors.toList())
                 );
             }
             if (machine.getMotherBoard()!=null) machine.getMotherBoard().setMachineId(id);

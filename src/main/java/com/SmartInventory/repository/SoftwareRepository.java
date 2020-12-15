@@ -14,5 +14,8 @@ public interface SoftwareRepository extends JpaRepository<Software,Integer> {
     @Query(nativeQuery = true,value="select * from machine_inventory.software where machine_id = ?1")
     public List<Software> findByMachineId(Integer id);
 
+    @Query(nativeQuery = true,value="select * from machine_inventory.software where machine_id=?1 and deleted=false")
+    public List<Software> findInstalledByMachineId(Integer id);
+
 
 }

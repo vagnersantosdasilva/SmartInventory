@@ -11,10 +11,11 @@ public class MotherBoard   {
     private Integer id;
     //@OneToOne
     //@JoinColumn(name="machine_id")
-    @Column(nullable = false )
+    @Column(nullable = false,unique = true )
     private Integer machineId;
     private String manufacturer;
     private String product;
+
     private String serialNumber;
     private String status;
 

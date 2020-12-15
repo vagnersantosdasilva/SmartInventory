@@ -5,6 +5,7 @@ import com.SmartInventory.exceptions.ResourceNotFoundException;
 import com.SmartInventory.model.*;
 import com.SmartInventory.repository.MachineDTO;
 import com.SmartInventory.service.MachineService;
+import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,9 +37,9 @@ public class SmartInventoryController {
         );
     }
 
-    @PutMapping("machine/update")
-    public ResponseEntity<?> updateMachine(@RequestBody MachineDTO machine) throws ResourceNotFoundException{
-        machineService.machineUpdate(machine);
+    @PutMapping("machine/update/{id}")
+    public ResponseEntity<?> updateMachine(@PathVariable("id")Integer id,@RequestBody MachineDTO machine) throws ResourceNotFoundException,DuplicateValueException{
+        machineService.machineUpdate(id,machine);
         return new ResponseEntity<>(null,HttpStatus.OK);
     }
 

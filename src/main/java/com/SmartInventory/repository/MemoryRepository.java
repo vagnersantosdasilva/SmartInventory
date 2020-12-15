@@ -13,4 +13,7 @@ public interface MemoryRepository extends JpaRepository< Memory,Integer> {
     @Query(nativeQuery = true,value = "select * from machine_inventory.memory where machine_id = ?")
     public List<Memory> findByMachineId(Integer id);
 
+    @Query(nativeQuery = true,value = "select * from machine_inventory.memory where machine_id = ? and removed=false")
+    public List<Memory> findInstalledByMachineId(Integer id);
+
 }
