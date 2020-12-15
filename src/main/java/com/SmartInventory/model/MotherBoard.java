@@ -1,21 +1,21 @@
 package com.SmartInventory.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 
 @Entity
-public class MotherBoard {
+public class MotherBoard   {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     //@OneToOne
     //@JoinColumn(name="machine_id")
+    @Column(nullable = false,unique = true )
     private Integer machineId;
     private String manufacturer;
     private String product;
+
     private String serialNumber;
     private String status;
 
@@ -28,6 +28,8 @@ public class MotherBoard {
         this.serialNumber = serialNumber;
         this.status = status;
     }
+
+    public MotherBoard(){}
 
 
     public Integer getId() {

@@ -1,10 +1,7 @@
 package com.SmartInventory.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -14,18 +11,19 @@ public class OperationalSystem  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-
+    @Column(nullable = false,unique = true )
     private Integer machineId;
     private String name;
     private String sysUpdate;
     private String hostname;
     private String status;
     private String version;
-    private Date installDate;
-    private Date lastBoot;
+    private String installDate;
 
-    public OperationalSystem(Integer id, Integer machineId, String name, String sysUpdate, String hostname, String status,
-                             String version, Date installDate, Date lastBoot) {
+
+
+    public OperationalSystem(Integer id, Integer machineId, String name, String sysUpdate,
+                             String hostname, String status, String version, String installDate) {
         this.id = id;
         this.machineId = machineId;
         this.name = name;
@@ -34,11 +32,35 @@ public class OperationalSystem  {
         this.status = status;
         this.version = version;
         this.installDate = installDate;
-        this.lastBoot = lastBoot;
+
     }
 
     public OperationalSystem(){}
 
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getMachineId() {
+        return machineId;
+    }
+
+    public void setMachineId(Integer machineId) {
+        this.machineId = machineId;
+    }
+
+    public String getSysUpdate() {
+        return sysUpdate;
+    }
+
+    public void setSysUpdate(String sysUpdate) {
+        this.sysUpdate = sysUpdate;
+    }
 
     public String getName() {
         return name;
@@ -80,19 +102,12 @@ public class OperationalSystem  {
         this.version = version;
     }
 
-    public Date getInstallDate() {
+    public String getInstallDate() {
         return installDate;
     }
 
-    public void setInstallDate(Date installDate) {
+    public void setInstallDate(String installDate) {
         this.installDate = installDate;
     }
 
-    public Date getLastBoot() {
-        return lastBoot;
-    }
-
-    public void setLastBoot(Date lastBoot) {
-        this.lastBoot = lastBoot;
-    }
 }

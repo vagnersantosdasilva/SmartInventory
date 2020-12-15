@@ -1,17 +1,16 @@
 package com.SmartInventory.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
 
 
 @Entity
-public class Software {
+public class Software implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(nullable = false )
     private Integer machineId;
     private String name;
     private String version;
@@ -20,8 +19,15 @@ public class Software {
     private String installDate;
     private String uninstallLocation;
     private String installLocation;
+    private Boolean deleted;
+    private String deleteDate;
+    private String categories;
 
-    public Software(Integer id, Integer machineId, String name, String version, String arquiteture, Boolean collection, String installDate, String uninstallLocation, String installLocation) {
+
+
+    public Software(Integer id, Integer machineId, String name, String version, String arquiteture,
+                    Boolean collection, String installDate, String uninstallLocation,
+                    String installLocation, Boolean deleted, String deleteDate,String categories) {
         this.id = id;
         this.machineId = machineId;
         this.name = name;
@@ -31,10 +37,20 @@ public class Software {
         this.installDate = installDate;
         this.uninstallLocation = uninstallLocation;
         this.installLocation = installLocation;
+        this.deleted=deleted;
+        this.deleteDate=deleteDate;
+        this.categories=categories;
     }
 
     public Software(){}
 
+    public String getCategories() {
+        return categories;
+    }
+
+    public void setCategories(String categories) {
+        this.categories = categories;
+    }
 
     public Integer getId() {
         return id;
@@ -106,5 +122,21 @@ public class Software {
 
     public void setInstallLocation(String installLocation) {
         this.installLocation = installLocation;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public String getDeleteDate() {
+        return deleteDate;
+    }
+
+    public void setDeleteDate(String deleteDate) {
+        this.deleteDate = deleteDate;
     }
 }

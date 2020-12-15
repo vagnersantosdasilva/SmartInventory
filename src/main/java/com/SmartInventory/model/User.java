@@ -10,7 +10,6 @@ import javax.persistence.*;
 public class User extends AbstractEntity {
 
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -64,11 +63,6 @@ public class User extends AbstractEntity {
     public void setAdmin(boolean admin) {
         this.admin = admin;
     }
-
-
-
-
-
 
     
 }

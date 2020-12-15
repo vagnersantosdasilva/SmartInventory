@@ -1,33 +1,38 @@
 package com.SmartInventory.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-public class Memory {
+public class Memory{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(nullable = false )
     private Integer machineId;
     private String manufacturer;
     private String type;
     private Integer size;
     private Integer frequency;
+    private String slot;
+    private boolean removed;
+    private String serialNumber;
 
-    public Memory(Integer id,Integer machineId, String manufacturer, String type, Integer size, Integer frequency) {
+
+    public Memory(Integer id, Integer machineId, String manufacturer,
+                  String type, Integer size, Integer frequency, String slot, boolean removed ) {
 
         this.machineId = machineId;
         this.manufacturer = manufacturer;
         this.type = type;
         this.size = size;
         this.frequency = frequency;
+        this.slot = slot;
+        this.removed = removed;
     }
     public Memory(){}
-
 
 
     public Integer getId() {
@@ -76,5 +81,21 @@ public class Memory {
 
     public void setFrequency(Integer frequency) {
         this.frequency = frequency;
+    }
+
+    public String getSlot(){  return slot; }
+
+    public void setSlot(String slot) { this.slot = slot;}
+
+    public boolean isRemoved() { return removed;}
+
+    public void setRemoved(boolean removed) {  this.removed = removed;  }
+
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
     }
 }
