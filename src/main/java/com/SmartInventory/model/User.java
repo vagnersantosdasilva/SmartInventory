@@ -5,6 +5,7 @@ import org.dom4j.tree.AbstractEntity;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class User extends AbstractEntity {
@@ -25,7 +26,7 @@ public class User extends AbstractEntity {
     @NotEmpty
     private String password;
 
-    @NotEmpty
+    @NotNull
     private boolean admin;
 
     public User(Long id, String name, String userName, String password, boolean admin) {
