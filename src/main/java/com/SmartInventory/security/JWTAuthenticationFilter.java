@@ -1,10 +1,9 @@
 package com.SmartInventory.security;
 
-import com.SmartInventory.model.User;
+import com.SmartInventory.security.DTO.UserDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -31,10 +31,12 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         //TODO:Pegar informações que vem do JSON e transforma-las em user
         try{
             ObjectMapper objectMapper = new ObjectMapper();
-            User user =objectMapper.readValue(request.getInputStream(), User.class);
+            UserDTO user =objectMapper.readValue(request.getInputStream(), UserDTO.class);
             UsernamePasswordAuthenticationToken upat = new UsernamePasswordAuthenticationToken(
-                        user.getUserName(),
-                        user.getPassword());
+                        user.getUsername(),
+                        user.getPassword(),
+                        new ArrayList<>()
+            );
             return authenticationManager.authenticate(upat);
 
         }catch (IOException e){
@@ -50,7 +52,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                         .setSubject(userDetails.getUsername())
                         .setExpiration(new Date(System.currentTimeMillis()+SecurityConstants.EXPIRATION_TIME))
                         .claim("displayName",userDetails.getDisplayName())
-                        .signWith(SignatureAlgorithm.ES512,SecurityConstants.SECRET_KEY)
+                        .signWith(SignatureAlgorithm.HS512,SecurityConstants.SECRET_KEY)
                         .compact();
 
         response.addHeader(

@@ -6,7 +6,6 @@ import org.dom4j.tree.AbstractEntity;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,7 +23,7 @@ public class User extends AbstractEntity {
 
     @NotEmpty
     @Column(unique=true)
-    private String userName;
+    private String username;
 
     @JsonIgnore
     @NotEmpty
@@ -34,10 +33,10 @@ public class User extends AbstractEntity {
     @CollectionTable(name="Profiles")
     private Set<Integer> profiles = new HashSet<>();
 
-    public User(Long id, String name, String userName, String password) {
+    public User(Long id, String name, String username, String password) {
         this.id = id;
         this.name = name;
-        this.userName = userName;
+        this.username = username;
         this.password = password;
         addProfile(Profile.USER);
     }
@@ -78,12 +77,12 @@ public class User extends AbstractEntity {
         profiles.add(profile.getCode());
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
