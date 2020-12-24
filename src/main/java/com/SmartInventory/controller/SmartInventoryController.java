@@ -9,6 +9,7 @@ import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -21,13 +22,14 @@ public class SmartInventoryController {
     @Autowired
     MachineService machineService;
 
-
+    @PreAuthorize("hasRole('MACHINE') or hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/machine/{id}")
     public ResponseEntity<?> getMachineById(@PathVariable("id") Integer id) throws ResourceNotFoundException {
 
         return new ResponseEntity<>(machineService.findMachineDTOById(id), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_MACHINE')")
     @PostMapping("/machine/create")
     public ResponseEntity<?> createMachine(@RequestBody MachineDTO machine) throws DuplicateValueException {
 
@@ -36,7 +38,7 @@ public class SmartInventoryController {
                 HttpStatus.CREATED
         );
     }
-
+    @PreAuthorize("hasAnyRole('MACHINE')")
     @PutMapping("machine/update/{id}")
     public ResponseEntity<?> updateMachine(@PathVariable("id")Integer id,@RequestBody MachineDTO machine) throws ResourceNotFoundException,DuplicateValueException{
         machineService.machineUpdate(id,machine);
